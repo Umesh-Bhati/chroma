@@ -12,9 +12,7 @@ use chroma_types::{
 use criterion::Criterion;
 use criterion::{criterion_group, criterion_main};
 use worker::execution::operator::Operator;
-use worker::execution::operators::metadata_filtering::{
-    MetadataFilteringInput, MetadataFilteringOperator,
-};
+use worker::execution::operators::filter::{FilterOperator, FilterOperatorInput};
 
 const DOCUMENT_LENGTH: usize = 64;
 const EMBEDDING_DIMENSION: usize = 6;
@@ -119,7 +117,7 @@ fn bench_metadata_filtering(criterion: &mut Criterion) {
     };
 
     let routine = |metadata_filter_input| async move {
-        MetadataFilteringOperator::new()
+        FilterOperator::new()
             .run(&metadata_filter_input)
             .await
             .expect("Metadata filtering should not fail.");
@@ -131,7 +129,7 @@ fn bench_metadata_filtering(criterion: &mut Criterion) {
 
         for (op, where_clause) in baseline_where_clauses() {
             let setup = || {
-                MetadataFilteringInput::new(
+                FilterOperatorInput::new(
                     compact.blockfile_provider.clone(),
                     compact.record.clone(),
                     compact.metadata.clone(),
