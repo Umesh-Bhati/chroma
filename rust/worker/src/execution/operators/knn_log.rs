@@ -17,14 +17,24 @@ use crate::{
 use super::{
     fetch_log::{FetchLogError, FetchLogOutput},
     fetch_segment::{FetchSegmentError, FetchSegmentOutput},
+    filter::FilterOutput,
     knn::KnnOperator,
 };
 
-#[derive(Debug)]
-struct KnnLogInput {
+pub struct KnnLogInput {
     logs: FetchLogOutput,
     segments: FetchSegmentOutput,
     log_oids: SignedRoaringBitmap,
+}
+
+impl From<FilterOutput> for KnnLogInput {
+    fn from(value: FilterOutput) -> Self {
+        Self {
+            logs: value.logs,
+            segments: value.segments,
+            log_oids: value.log_oids,
+        }
+    }
 }
 
 #[derive(Debug)]
