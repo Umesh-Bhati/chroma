@@ -7,13 +7,23 @@ use crate::execution::{operator::Operator, utils::Distance};
 
 use super::{
     fetch_segment::{FetchSegmentError, FetchSegmentOutput},
+    filter::FilterOutput,
     knn::KnnOperator,
 };
 
 #[derive(Debug)]
-struct KnnHnswInput {
+pub struct KnnHnswInput {
     segments: FetchSegmentOutput,
     compact_oids: SignedRoaringBitmap,
+}
+
+impl From<FilterOutput> for KnnHnswInput {
+    fn from(value: FilterOutput) -> Self {
+        Self {
+            segments: value.segments,
+            compact_oids: value.compact_oids,
+        }
+    }
 }
 
 #[derive(Debug)]

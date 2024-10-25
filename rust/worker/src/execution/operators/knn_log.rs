@@ -21,6 +21,7 @@ use super::{
     knn::KnnOperator,
 };
 
+#[derive(Clone, Debug)]
 pub struct KnnLogInput {
     logs: FetchLogOutput,
     segments: FetchSegmentOutput,
