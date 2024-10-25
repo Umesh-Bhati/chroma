@@ -101,6 +101,11 @@ impl BlockDelta {
         let mut first_iter: bool = true;
         // iterate over all blocks to split until its empty
         while let Some(curr_block) = blocks_to_split.pop() {
+            println!(
+                "Splitting block with count: {} and size: {}\n",
+                curr_block.builder.len(),
+                curr_block.builder.get_size::<K>()
+            );
             let (new_start_key, new_delta) = curr_block.builder.split::<K>(half_size);
             let new_block = BlockDelta {
                 builder: new_delta,
@@ -520,10 +525,17 @@ mod test {
             builder.add("", key.as_str(), *value);
         }
         let starting_size = builder.get_size::<&str, u32>();
+
         fn recursive_split(builder: BlockDelta, max_block_size_bytes: usize) {
-            if max_block_size_bytes == 0 {
+            if max_block_size_bytes == 0 || max_block_size_bytes <= 256 {
                 return;
             }
+            println!(
+                "Recursing on block with len: {} and size: {}. Will split to max size: {}",
+                builder.len(),
+                builder.get_size::<&str, u32>(),
+                max_block_size_bytes
+            );
             let base_size = builder.get_size::<&str, u32>();
             for (_, block) in builder.split::<&str, u32>(max_block_size_bytes) {
                 if block.get_size::<&str, u32>() < base_size {
@@ -531,6 +543,7 @@ mod test {
                 }
             }
         }
+
         recursive_split(builder, starting_size / 2);
     }
 }
