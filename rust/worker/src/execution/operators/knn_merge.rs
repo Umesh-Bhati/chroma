@@ -2,9 +2,9 @@ use chroma_error::{ChromaError, ErrorCodes};
 use thiserror::Error;
 use tonic::async_trait;
 
-use crate::execution::{operator::Operator, utils::Distance};
+use crate::execution::operator::Operator;
 
-use super::{fetch_log::FetchLogOutput, fetch_segment::FetchSegmentOutput};
+use super::{fetch_log::FetchLogOutput, fetch_segment::FetchSegmentOutput, knn::Distance};
 
 #[derive(Clone, Debug)]
 pub struct KnnMergeOperator {

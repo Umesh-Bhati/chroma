@@ -3,12 +3,12 @@ use chroma_types::SignedRoaringBitmap;
 use thiserror::Error;
 use tonic::async_trait;
 
-use crate::execution::{operator::Operator, utils::Distance};
+use crate::execution::operator::Operator;
 
 use super::{
     fetch_segment::{FetchSegmentError, FetchSegmentOutput},
     filter::FilterOutput,
-    knn::KnnOperator,
+    knn::{Distance, KnnOperator},
 };
 
 #[derive(Debug)]

@@ -7,10 +7,7 @@ use thiserror::Error;
 use tonic::async_trait;
 
 use crate::{
-    execution::{
-        operator::Operator,
-        utils::{normalize, Distance},
-    },
+    execution::operator::Operator,
     segment::{LogMaterializer, LogMaterializerError},
 };
 
@@ -18,7 +15,7 @@ use super::{
     fetch_log::{FetchLogError, FetchLogOutput},
     fetch_segment::{FetchSegmentError, FetchSegmentOutput},
     filter::FilterOutput,
-    knn::KnnOperator,
+    knn::{normalize, Distance, KnnOperator},
 };
 
 #[derive(Clone, Debug)]

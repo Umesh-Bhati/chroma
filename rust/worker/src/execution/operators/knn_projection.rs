@@ -3,11 +3,12 @@ use thiserror::Error;
 use tonic::async_trait;
 use tracing::trace;
 
-use crate::execution::{operator::Operator, utils::Distance};
+use crate::execution::operator::Operator;
 
 use super::{
     fetch_log::FetchLogOutput,
     fetch_segment::FetchSegmentOutput,
+    knn::Distance,
     knn_merge::KnnMergeOutput,
     projection::{ProjectionError, ProjectionOperator, ProjectionRecord},
 };
